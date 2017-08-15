@@ -13,21 +13,19 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/rooms")
-@Api(value = "rooms",description = "Data", tags ="rooms")
+@RequestMapping(value="/rooms")
+@Api(value="rooms", description = "Data service operations on rooms", tags=("rooms"))
 public class RoomController {
-
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "Get All rooms", notes = "Get all rooms in the system", nickname = "getRooms")
-    public List<Room> findAll(@RequestParam(name = "rootNumber",required = false) String roomNumber){
-        if(StringUtils.isNoneEmpty(roomNumber)){
+    @ApiOperation(value="Get All Rooms", notes="Gets all rooms in the system", nickname="getRooms")
+    public List<Room> findAll(@RequestParam(name="roomNumber", required = false)String roomNumber){
+        if(StringUtils.isNotEmpty(roomNumber)){
             return Collections.singletonList(this.roomRepository.findByRoomNumber(roomNumber));
         }
         return (List<Room>) this.roomRepository.findAll();
-
-    };
-
+    }
 }
+
